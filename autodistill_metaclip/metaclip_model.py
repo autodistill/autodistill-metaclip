@@ -1,23 +1,21 @@
 import os
 from dataclasses import dataclass
 
-import torch
-from PIL import Image
-import open_clip
 import numpy as np
-
 import supervision as sv
+import torch
 from autodistill.detection import CaptionOntology, DetectionBaseModel
+from PIL import Image
+from transformers import CLIPModel, CLIPProcessor
 
 HOME = os.path.expanduser("~")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-from transformers import CLIPProcessor, CLIPModel
 
 @dataclass
 class MetaCLIP(DetectionBaseModel):
     ontology: CaptionOntology
-    
+
     def __init__(self, ontology: CaptionOntology):
         self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -28,16 +26,18 @@ class MetaCLIP(DetectionBaseModel):
 
         image = Image.open(input)
 
-        inputs = self.processor(text=prompts, images=image, return_tensors="pt", padding=True)
+        inputs = self.processor(
+            text=prompts, images=image, return_tensors="pt", padding=True
+        )
 
         with torch.no_grad():
             outputs = self.model(**inputs)
-            logits_per_image = outputs.logits_per_image 
+            logits_per_image = outputs.logits_per_image
             probs = logits_per_image.softmax(dim=1).tolist()
 
             # create dictionary of prompt: probability
             probs = list(zip(prompts, probs[0]))
-            
+
             # filter out prompts with confidence less than the threshold
             probs = [i for i in probs if i[1] > confidence]
 
