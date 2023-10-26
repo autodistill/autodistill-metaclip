@@ -11,11 +11,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="autodistill-base-model",
+    name="autodistill-metaclip",
     version=version,
-    author="",
-    author_email="",
-    description="Model for use with Autodistill",
+    author="Roboflow",
+    author_email="support@roboflow.com",
+    description="MetaCLIP base model for use with Autodistill.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="",
