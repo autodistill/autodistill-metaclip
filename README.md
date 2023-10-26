@@ -29,6 +29,8 @@ pip3 install autodistill-metaclip
 
 ## Quickstart
 
+### get predictions
+
 ```python
 from autodistill_clip import MetaCLIP
 
@@ -45,7 +47,22 @@ base_model = MetaCLIP(
         }
     )
 )
-base_model.label("./context_images", extension=".jpeg")
+
+results = base_model.predict("./image.png")
+print(results)
+```
+
+### calculate and compare embeddings
+
+```python
+from autodistill_metaclip import MetaCLIP
+
+base_model = MetaCLIP(None)
+
+text = base_model.embed_text("coffee")
+image = base_model.embed_image("coffeeshop.jpg")
+
+print(base_model.compare(text, image))
 ```
 
 ## License
