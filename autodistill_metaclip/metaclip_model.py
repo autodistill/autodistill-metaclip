@@ -45,3 +45,22 @@ class MetaCLIP(DetectionBaseModel):
                 class_id=np.array([prompts.index(i[0]) for i in probs]),
                 confidence=np.array([i[1] for i in probs]),
             )
+
+    def embed_image(self, input: str) -> torch.Tensor:
+        image = Image.open(input)
+
+        inputs = self.processor(images=image, return_tensors="pt", padding=True)
+
+        with torch.no_grad():
+            outputs = self.model.get_image_features(**inputs)
+            return outputs
+        
+    def embed_text(self, input: str) -> torch.Tensor:
+        inputs = self.processor(text=input, return_tensors="pt", padding=True)
+
+        with torch.no_grad():
+            outputs = self.model.get_text_features(**inputs)
+            return outputs
+        
+    def compare(self, embed1: torch.Tensor, embed2: torch.Tensor) -> float:
+        return torch.cosine_similarity(embed1, embed2).item()
