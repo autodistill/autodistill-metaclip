@@ -1,5 +1,3 @@
-**⚠️ This is an example README for use in creating a Base Model. You will need to adjust this document for the model you are using.**
-
 <div align="center">
   <p>
     <a align="center" href="" target="_blank">
@@ -11,23 +9,22 @@
   </p>
 </div>
 
-# Autodistill CLIP Module
+# Autodistill MetaCLIP Module
 
-This repository contains the code supporting the CLIP base model for use with [Autodistill](https://github.com/autodistill/autodistill).
+This repository contains the code supporting the MetaCLIP base model for use with [Autodistill](https://github.com/autodistill/autodistill).
 
-[CLIP](https://github.com/openai/CLIP), developed by OpenAI, is a computer vision model trained using pairs of images and text. You can use CLIP with autodistill for image classification.
+[MetaCLIP](https://github.com/facebookresearch/MetaCLIP), developed by Meta AI Research, is a computer vision model trained using pairs of images and text. The model was described in the [Demystifying CLIP Data](https://arxiv.org/abs/2309.16671) paper. You can use MetaCLIP with autodistill for image classification.
 
 Read the full [Autodistill documentation](https://autodistill.github.io/autodistill/).
 
-Read the [CLIP Autodistill documentation](https://autodistill.github.io/autodistill/base_models/clip/).
+Read the [MetaCLIP Autodistill documentation](https://autodistill.github.io/autodistill/base_models/metaclip/).
 
 ## Installation
 
-To use CLIP with autodistill, you need to install the following dependency:
-
+To use MetaCLIP with autodistill, you need to install the following dependency:
 
 ```bash
-pip3 install autodistill-clip
+pip3 install autodistill-metaclip
 ```
 
 ## Quickstart
@@ -51,10 +48,9 @@ base_model = MetaCLIP(
 base_model.label("./context_images", extension=".jpeg")
 ```
 
-
 ## License
 
-[add license information here]
+This project was licensed under a Creative Commons [Attribution-NonCommercial 4.0 International](LICENSE).
 
 ## 🏆 Contributing
 
