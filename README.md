@@ -32,7 +32,7 @@ pip3 install autodistill-metaclip
 ### get predictions
 
 ```python
-from autodistill_clip import MetaCLIP
+from autodistill_metaclip import MetaCLIP
 
 # define an ontology to map class names to our MetaCLIP prompt
 # the ontology dictionary has the format {caption: class}
