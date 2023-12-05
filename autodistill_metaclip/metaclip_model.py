@@ -2,11 +2,12 @@ import os
 from dataclasses import dataclass
 
 import numpy as np
+import open_clip
 import supervision as sv
 import torch
 from autodistill.detection import CaptionOntology, DetectionBaseModel
+from autodistill.helpers import load_image
 from PIL import Image
-import open_clip
 
 HOME = os.path.expanduser("~")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -33,7 +34,9 @@ class MetaCLIP(DetectionBaseModel):
     def predict(self, input: str, confidence: int = 0.5) -> sv.Classifications:
         prompts = self.ontology.prompts()
 
-        image = self.preprocess(Image.open(input)).unsqueeze(0).to(DEVICE)
+        image = load_image(input, return_format="PIL")
+
+        image = self.preprocess(image).unsqueeze(0).to(DEVICE)
 
         text = open_clip.tokenize(prompts)
 
